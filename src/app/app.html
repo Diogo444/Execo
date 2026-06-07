@@ -1,1 +1,66 @@
-<button class="button">Click me</button>
+<main class="button-board" aria-labelledby="app-title">
+  <h1 id="app-title" class="sr-only">{{ title() }}</h1>
+
+  <section class="button-grid" aria-label="Boutons disponibles">
+    @for (action of actionButtons; track action.label) {
+      @switch (action.variant) {
+        @case ('filled') {
+          <button
+            mat-flat-button
+            type="button"
+            class="board-button"
+            [class.board-button--wide]="action.size === 'wide'"
+            [class.board-button--tall]="action.size === 'tall'"
+            [class.board-button--compact]="action.size === 'compact'"
+            (click)="runLater(action)"
+          >
+            <mat-icon aria-hidden="true">{{ action.icon }}</mat-icon>
+            <span>{{ action.label }}</span>
+          </button>
+        }
+        @case ('raised') {
+          <button
+            mat-raised-button
+            type="button"
+            class="board-button board-button--raised"
+            [class.board-button--wide]="action.size === 'wide'"
+            [class.board-button--tall]="action.size === 'tall'"
+            [class.board-button--compact]="action.size === 'compact'"
+            (click)="runLater(action)"
+          >
+            <mat-icon aria-hidden="true">{{ action.icon }}</mat-icon>
+            <span>{{ action.label }}</span>
+          </button>
+        }
+        @case ('outlined') {
+          <button
+            mat-stroked-button
+            type="button"
+            class="board-button board-button--outlined"
+            [class.board-button--wide]="action.size === 'wide'"
+            [class.board-button--tall]="action.size === 'tall'"
+            [class.board-button--compact]="action.size === 'compact'"
+            (click)="runLater(action)"
+          >
+            <mat-icon aria-hidden="true">{{ action.icon }}</mat-icon>
+            <span>{{ action.label }}</span>
+          </button>
+        }
+        @default {
+          <button
+            mat-button
+            type="button"
+            class="board-button board-button--soft"
+            [class.board-button--wide]="action.size === 'wide'"
+            [class.board-button--tall]="action.size === 'tall'"
+            [class.board-button--compact]="action.size === 'compact'"
+            (click)="runLater(action)"
+          >
+            <mat-icon aria-hidden="true">{{ action.icon }}</mat-icon>
+            <span>{{ action.label }}</span>
+          </button>
+        }
+      }
+    }
+  </section>
+</main>
