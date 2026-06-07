@@ -1,6 +1,13 @@
 import { NodeSSH } from 'node-ssh';
-
+import express from 'express';
+import bodyParser from 'body-parser';
+import cors from 'cors';
 import dotenv from 'dotenv';
+import { describe } from 'vitest';
+
+const app = express();
+app.use(bodyParser.json());
+app.use(cors());
 dotenv.config();
 const ssh = new NodeSSH();
 
@@ -27,9 +34,27 @@ async function excuteCommande(commande) {
         console.error('Erreur SSH:', error);
     }
 }
+const action = [
+    {
+        name: 'list',
+        command: 'ls -lo',
+        describe: 'liste tous les fichiers du répertoire courant'
+    },
+    {
+        name: 'docker',
+        command: 'docker ps',
+        describe: 'liste tous les conteneurs Docker en cours d\'exécution'
+    }
+]
 
-await excuteCommande(test);
-await excuteCommande(test2);
-console.log('hostname : ' + process.env.SSH_HOST);
-console.log('username : ' + process.env.SSH_USERNAME);
-console.log('password : ' + process.env.SSH_PASSWORD);
+
+app.post('/api/action', async (req, res) => {
+    const { actionName } = req.body;
+    console.log('Action Name:', actionName);
+    
+});
+
+
+app.listen(process.env.PORT_APP, () => {
+    console.log('Server is running on port ' + process.env.PORT_APP);
+});

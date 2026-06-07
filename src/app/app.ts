@@ -19,7 +19,7 @@ type ActionButton = {
 })
 export class App {
   protected readonly title = signal('Execo');
-  protected api: string = 'https://api.execo.com/v1';
+  protected api: string = 'http://localhost:3000/api';
   private http: HttpClient;
   constructor(http: HttpClient) {
     this.http = http;
@@ -47,7 +47,7 @@ export class App {
 
   protected runLater(action: ActionButton): void {
     console.info(`${action.label} sera branche plus tard.`);
-    this.http.post(`${this.api}/action`, { action: action.id }).subscribe({
+    this.http.post(`${this.api}/action`, { actionName: action.id }).subscribe({
       next: (response) => console.log('Action enregistrée:', response),
       error: (error) => console.error('Erreur lors de l\'enregistrement de l\'action:', error)
     });
