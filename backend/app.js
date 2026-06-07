@@ -51,7 +51,18 @@ const action = [
 app.post('/api/action', async (req, res) => {
     const { actionName } = req.body;
     console.log('Action Name:', actionName);
-    
+    const actionToExecute = action.find(a => a.name === actionName);
+    if (!actionToExecute) {
+        return res.status(400).json({ error: 'Action non trouvée' });
+    }
+    try {
+        await excuteCommande(actionToExecute.command);
+        res.json({ message: 'Commande exécutée avec succès' });
+    } catch (error) {
+        console.error('Erreur lors de l\'exécution de la commande:', error);
+        res.status(500).json({ error: 'Erreur lors de l\'exécution de la commande' });
+    }
+
 });
 
 

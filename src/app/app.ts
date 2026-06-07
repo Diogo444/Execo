@@ -27,7 +27,7 @@ export class App {
 
 
   protected readonly actionButtons: ActionButton[] = [
-    { label: 'Bouton 01', icon: 'radio_button_checked', variant: 'filled', size: 'wide', id: 'button-01' },
+    { label: 'Bouton 01', icon: 'radio_button_checked', variant: 'filled', size: 'wide', id: 'list' },
     { label: 'Bouton 02', icon: 'favorite', variant: 'raised', size: 'standard', id: 'button-02' },
     { label: 'Bouton 03', icon: 'bolt', variant: 'soft', size: 'standard', id: 'button-03' },
     { label: 'Bouton 04', icon: 'auto_awesome', variant: 'outlined', size: 'compact', id: 'button-04' },
