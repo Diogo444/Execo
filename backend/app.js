@@ -70,14 +70,23 @@ app.post('/api/action', async (req, res) => {
 
 
         if (actionToExecute.parse) {
+            console.log('Parsing output for action:', actionName);
             data = actionToExecute.parse(result.stdout);
+            res.json({
+                message: 'Commande exécutée et parsée avec succès',
+                data,
+                stderr: result.stderr
+            });
+        }
+        else {
+            res.json({
+                message: 'Commande exécutée avec succès',
+
+                stderr: result.stderr
+            });
         }
 
-        res.json({
-            message: 'Commande exécutée avec succès',
-            data,
-            stderr: result.stderr
-        });
+
 
     } catch (error) {
         console.error('Erreur lors de l\'exécution de la commande:', error);

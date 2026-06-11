@@ -24,7 +24,8 @@
   <mat-dialog-content class="dialog-content">
     <div class="json-viewer">
       <ng-container
-        *ngTemplateOutlet="renderValue; context: { $implicit: rootValue, key: 'data', level: 0 }"
+        [ngTemplateOutlet]="renderValue"
+        [ngTemplateOutletContext]="{ $implicit: rootValue, key: 'data', level: 0 }"
       />
     </div>
   </mat-dialog-content>
@@ -47,7 +48,8 @@
         <div class="node-children">
           @for (item of value; track trackByIndex($index)) {
             <ng-container
-              *ngTemplateOutlet="renderValue; context: { $implicit: item, key: '#' + $index, level: level + 1 }"
+              [ngTemplateOutlet]="renderValue"
+              [ngTemplateOutletContext]="{ $implicit: item, key: '#' + $index, level: level + 1 }"
             />
           }
         </div>
@@ -67,7 +69,8 @@
         <div class="node-children">
           @for (entry of objectEntries(value); track trackByKey($index, entry)) {
             <ng-container
-              *ngTemplateOutlet="renderValue; context: { $implicit: entry.value, key: entry.key, level: level + 1 }"
+              [ngTemplateOutlet]="renderValue"
+              [ngTemplateOutletContext]="{ $implicit: entry.value, key: entry.key, level: level + 1 }"
             />
           }
         </div>
