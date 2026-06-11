@@ -1,0 +1,85 @@
+<section class="dialog-shell">
+  <header class="dialog-header">
+    <div>
+      <p class="eyebrow">Résultat de commande</p>
+      <h1 mat-dialog-title>{{ data.message }}</h1>
+    </div>
+
+    <button mat-icon-button mat-dialog-close aria-label="Fermer la modale">
+      <mat-icon>close</mat-icon>
+    </button>
+  </header>
+
+  <div class="summary" aria-label="Résumé des données">
+    <div>
+      <span>{{ rootType }}</span>
+      <small>type</small>
+    </div>
+    <div>
+      <span>{{ itemCount }}</span>
+      <small>éléments</small>
+    </div>
+  </div>
+
+  <mat-dialog-content class="dialog-content">
+    <div class="json-viewer">
+      <ng-container
+        *ngTemplateOutlet="renderValue; context: { $implicit: rootValue, key: 'data', level: 0 }"
+      />
+    </div>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Fermer</button>
+  </mat-dialog-actions>
+</section>
+
+<ng-template #renderValue let-value let-key="key" let-level="level">
+  @if (isArray(value)) {
+    <section class="json-node collection" [style.--level]="level">
+      <header class="node-header">
+        <span class="node-key">{{ key }}</span>
+        <span class="type-badge">array</span>
+        <span class="node-meta">{{ arrayLabel(value) }}</span>
+      </header>
+
+      @if (value.length > 0) {
+        <div class="node-children">
+          @for (item of value; track trackByIndex($index)) {
+            <ng-container
+              *ngTemplateOutlet="renderValue; context: { $implicit: item, key: '#' + $index, level: level + 1 }"
+            />
+          }
+        </div>
+      } @else {
+        <p class="empty-line">Tableau vide</p>
+      }
+    </section>
+  } @else if (isObject(value)) {
+    <section class="json-node collection" [style.--level]="level">
+      <header class="node-header">
+        <span class="node-key">{{ key }}</span>
+        <span class="type-badge">object</span>
+        <span class="node-meta">{{ objectLabel(value) }}</span>
+      </header>
+
+      @if (objectEntries(value).length > 0) {
+        <div class="node-children">
+          @for (entry of objectEntries(value); track trackByKey($index, entry)) {
+            <ng-container
+              *ngTemplateOutlet="renderValue; context: { $implicit: entry.value, key: entry.key, level: level + 1 }"
+            />
+          }
+        </div>
+      } @else {
+        <p class="empty-line">Objet vide</p>
+      }
+    </section>
+  } @else {
+    <div class="json-node primitive" [style.--level]="level" [class.string-value]="getValueType(value) === 'string'">
+      <span class="node-key">{{ key }}</span>
+      <span class="type-badge">{{ getValueType(value) }}</span>
+      <code class="primitive-value">{{ formatPrimitive(value) }}</code>
+    </div>
+  }
+</ng-template>
