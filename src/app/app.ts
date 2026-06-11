@@ -30,8 +30,9 @@ export class App {
 
 
   protected readonly actionButtons: ActionButton[] = [
-    { label: 'list', icon: 'list_add', variant: 'filled', size: 'wide', id: 'list' },
+    { label: 'List', icon: 'list_add', variant: 'filled', size: 'wide', id: 'list' },
     { label: 'Update', icon: 'update', variant: 'raised', size: 'wide', id: 'update' },
+    { label: 'List docker', icon: 'docker', variant: 'outlined', size: 'tall', id: 'list_docker' },
   ];
 
   protected runLater(action: ActionButton): void {

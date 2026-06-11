@@ -3,7 +3,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import { listParseToJson } from './paser.js';
+import { listDockerParseToJson, listParseToJson } from './paser.js';
 
 const app = express();
 app.use(bodyParser.json());
@@ -45,9 +45,10 @@ const action = [
         parse: listParseToJson
     },
     {
-        name: 'docker',
+        name: 'list_docker',
         command: 'docker ps',
-        describe: 'liste tous les conteneurs Docker en cours d\'exécution'
+        describe: 'liste tous les conteneurs Docker en cours d\'exécution',
+        parse: listDockerParseToJson
     },
     {
         name: 'update',
